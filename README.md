@@ -7,4 +7,4 @@ This project is about learning. We will let people provide YouTube videos for th
 3. Analyze the captions applying machine learning.
 4. Return YouTube URL with time stamps.
 
-Creators: morffis & luka1164
+Creators: morffis & luka1
