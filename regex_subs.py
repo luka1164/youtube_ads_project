@@ -1,22 +1,19 @@
 import re
 
-filename = r'test_subtitle.srt'
-pattern_number = re.compile('^\d+$')
-pattern_time = re.compile('^[\d]+:[\d]+:[\d]+,[\d]+ --> [\d]+:[\d]+:[\d]+,[\d]+$')
-pattern_speech = re.compile("^[A-Za-z,;'\"\\s]+[.?!]*$")
+with open('test_subtitle1.srt', 'r') as f:
+    subtitles = f.read()
+    
+num_pat = r'(\d+)'
+time_pat = r'(\d{2,}:\d{2}:\d{2},\d{3}) --> (\d{2,}:\d{2}:\d{2},\d{3})'
+sentence_pat = r'([^\n]*)\n'
 
-for i, line in enumerate(open(filename)):
-    for match in re.findall(pattern_number, line):
-        print(match)
+data_pattern = re.compile(r'\n'.join([num_pat, time_pat, sentence_pat]))
 
-for i, line in enumerate(open(filename)):
-    for match in re.findall(pattern_time, line):
-        print(match)
+sentences = []
 
-for i, line in enumerate(open(filename)):
-    for match in re.findall(pattern_speech, line):
-        print(match)       
+for i in re.finditer(data_pattern, subtitles):
+    sentences.append(i.group(4))
 
-# ^\d+$
-# ^[\d]+:[\d]+:[\d]+,[\d]+ --> [\d]+:[\d]+:[\d]+,[\d]+$
-# ^[A-Za-z,;'\"\\s]+[.?!]*$
+with open('test_subtitle.txt', 'w') as f:
+    for item in sentences:
+        f.write(item + ' ')
